@@ -7,5 +7,10 @@ pkgs.mkShell {
     python311Packages.faker
     python311Packages.pytest
   ];
+
+  shellHook = ''
+    echo "Spotify App Dev Environment Ready"
+    pytest
+  '';
 }
 
