@@ -38,7 +38,7 @@ class Playlist(Base):
     
     songs = relationship('Song', secondary=playlist_song, back_populates='playlists')
 
-    def __init__(self, name, user, id=None):
+    def __init__(self, name: str, user: User, id=None):
         self.name = name
         self.user = user
         if id:
