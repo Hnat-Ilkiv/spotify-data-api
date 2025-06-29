@@ -5,10 +5,13 @@ import csv
 import uuid
 import random
 import time
+import os
 
 fake = Faker()
 
-def generate_spotify_csv(filename='data/spotify_data.csv', users=100, playlists=100, songs=100):
+def generate_spotify_csv(filename='data/spotify_data.csv', users=100, playlists=100, songs=100, verbose=False):
+    os.makedirs(os.path.dirname(filename), exist_ok=True)
+
     start_time = time.time()
 
     total_users_written = 0
@@ -22,7 +25,7 @@ def generate_spotify_csv(filename='data/spotify_data.csv', users=100, playlists=
         total_rows_written += 1
 
         # Initial call to print 0% progress
-        print_progress_bar(0, users, prefix = '- Progress:', suffix = 'Complete', length = 50)
+        if verbose : print_progress_bar(0, users, prefix = '- Progress:', suffix = 'Complete', length = 50)
 
         for user_num in range(1, users + 1):
             user_id = str(uuid.uuid4())
@@ -41,17 +44,18 @@ def generate_spotify_csv(filename='data/spotify_data.csv', users=100, playlists=
                     writer.writerow([user_id, username, playlist_id, playlist_name, song_id, song_title, artist])
                     total_rows_written += 1
             # Update Progress Bar
-            print_progress_bar(user_num, users, prefix = '- Progress:', suffix = 'Complete', length = 50)
+            if verbose : print_progress_bar(user_num, users, prefix = '- Progress:', suffix = 'Complete', length = 50)
         
         end_time = time.time()
         str_time = time.strftime("%H:%M:%S",time.gmtime(end_time - start_time))
 
-        print(f"Result CSV file generate:")
-        print(f"- Users written:     {total_users_written}")
-        print(f"- Playlists written: {total_playlists_written}")
-        print(f"- Songs written:     {total_songs_written}")
-        print(f"- Rows written:      {total_rows_written}")
-        print(f"- CSV file size:     {file_size(filename)}")
-        print(f"- Generation time:   {str_time}")
+        if verbose: 
+            print(f"Result CSV file generate:")
+            print(f"- Users written:     {total_users_written}")
+            print(f"- Playlists written: {total_playlists_written}")
+            print(f"- Songs written:     {total_songs_written}")
+            print(f"- Rows written:      {total_rows_written}")
+            print(f"- CSV file size:     {file_size(filename)}")
+            print(f"- Generation time:   {str_time}")
         
     return total_rows_written

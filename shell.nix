@@ -9,6 +9,7 @@ pkgs.mkShell {
   ];
 
   shellHook = ''
+    alias main="python -m src.main"
     echo "Spotify App Dev Environment Ready"
     pytest
   '';

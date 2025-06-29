@@ -17,5 +17,5 @@
 ## Запуск проєкту
 ```bash
 nix-shell
-python src/main.py gen_csv
+python -m src.main gen_csv
 
